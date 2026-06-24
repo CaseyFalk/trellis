@@ -10,8 +10,8 @@
 class Trellis < Formula
   desc "Scaffold and grow living, captured knowledge bases for learning anything"
   homepage "https://github.com/CaseyFalk/trellis"
-  url "https://github.com/CaseyFalk/trellis/releases/download/v0.1.0/trellis-bundled-0.1.0.tgz"
-  sha256 "85945359229dbe3e35b49b7d33c53ed034850207869ac008dca9ee43757678ce"
+  url "https://github.com/CaseyFalk/trellis/releases/download/v0.1.1/trellis-bundled-0.1.1.tgz"
+  sha256 "b213c971d6093bb00efe835c0885c539e653cbe3a6578fcd1135bfa764883623"
   license "MIT"
 
   depends_on "node"

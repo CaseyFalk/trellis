@@ -36,10 +36,12 @@ In the agent session:
 ## See it + validate
 
 ```sh
-npm run dev        # browse http://localhost:4321
+trellis run        # serve + hot-reload at http://localhost:4321 (keep open beside the agent)
 trellis check      # {"ok":true,...}
 npm run build
 ```
+
+Leave `trellis run` open while you learn — captures appear in the browser live.
 
 ## Test an update
 

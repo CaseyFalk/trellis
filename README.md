@@ -38,6 +38,7 @@ The lifecycle:
 ```
 trellis new <name> "<focus>"   →  open in your agent  →  it offers to tailor
 ask questions  →  "capture this"  →  pages file themselves, cross-linked
+trellis run                    →  browse the site; it hot-reloads as you capture
 brew upgrade trellis  →  trellis update   (non-destructive framework upgrades)
 ```
 

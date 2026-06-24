@@ -1,6 +1,6 @@
 {
   "name": "@trellis/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Trellis framework core — a Starlight wrapper integration for living, captured knowledge bases.",
   "type": "module",
   "exports": {

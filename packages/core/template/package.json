@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.40.0",
-    "@trellis/core": "https://github.com/CaseyFalk/trellis/releases/download/v0.1.0/trellis-core-0.1.0.tgz",
+    "@trellis/core": "https://github.com/CaseyFalk/trellis/releases/download/v0.1.1/trellis-core-0.1.1.tgz",
     "astro": "^6.4.8",
     "cytoscape": "^3.34.0",
     "mermaid": "^11.15.0",

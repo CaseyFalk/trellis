@@ -6,11 +6,13 @@ base that grows as you learn, built on Astro + Starlight.
 ## Run it
 
 ```sh
-npm install      # if not already done by `trellis new`
-npm run dev      # local site with hot reload at http://localhost:4321
+trellis run      # serve the site locally with hot reload (Ctrl+C to stop)
+trellis check    # fast frontmatter + link + sources + tag validation
 npm run build    # production build (validates internal links)
-npm run check    # fast frontmatter + link + sources + tag validation
 ```
+
+Keep `trellis run` open beside your agent: as you capture, the site hot-reloads to
+show the new pages.
 
 ## Start learning
 

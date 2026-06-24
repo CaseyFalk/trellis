@@ -4,6 +4,7 @@
 // project-local core toolkit (version-correct).
 import { newCmd } from './new.mjs';
 import { updateCmd } from './update.mjs';
+import { runCmd } from './run.mjs';
 import { passthrough } from './lib.mjs';
 
 const PASSTHROUGH = new Set(['page', 'section', 'tag', 'journal', 'config', 'check']);
@@ -15,6 +16,8 @@ if (cmd === 'new') {
   newCmd(argv.slice(1)).catch((e) => { console.error(`✗ ${e.message}`); process.exit(1); });
 } else if (cmd === 'update') {
   updateCmd(argv.slice(1)).catch((e) => { console.error(`✗ ${e.message}`); process.exit(1); });
+} else if (cmd === 'run') {
+  runCmd(argv.slice(1)).catch((e) => { console.error(`✗ ${e.message}`); process.exit(1); });
 } else if (PASSTHROUGH.has(cmd)) {
   passthrough(argv);
 } else {
@@ -22,6 +25,7 @@ if (cmd === 'new') {
 
 Usage:
   trellis new <name> "<focus>"   Scaffold a new learning project
+  trellis run                    Serve the site locally; hot-reloads as you capture
   trellis update                 Update this project to the latest framework version
   trellis check                  Validate the knowledge base
   trellis page|section|tag|journal|config …   Content-management tools (agent-facing)

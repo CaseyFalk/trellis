@@ -1,6 +1,6 @@
 {
   "name": "trellis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Trellis CLI — scaffold and update Trellis learning projects (Homebrew-distributed; thin wrapper over @trellis/core).",
   "type": "module",
   "bin": {
