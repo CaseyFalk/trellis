@@ -1,0 +1,12 @@
+{
+  "name": "trellis-monorepo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "pack:local": "node scripts/pack-local.mjs"
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ]
+}

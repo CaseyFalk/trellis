@@ -1,0 +1,35 @@
+{
+  "name": "@trellis/core",
+  "version": "0.1.0",
+  "description": "Trellis framework core — a Starlight wrapper integration for living, captured knowledge bases.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./content": "./src/content.mjs",
+    "./cli": "./src/cli/index.mjs",
+    "./update": "./src/update.mjs",
+    "./components/*": "./src/components/*",
+    "./pages/*": "./src/pages/*",
+    "./styles/*": "./src/styles/*"
+  },
+  "bin": {
+    "trellis-core": "./src/cli/index.mjs"
+  },
+  "files": [
+    "src",
+    "template",
+    "procedures",
+    "migrations"
+  ],
+  "dependencies": {
+    "cytoscape": "^3.34.0",
+    "gray-matter": "^4.0.3",
+    "mermaid": "^11.15.0",
+    "starlight-links-validator": "^0.24.1",
+    "starlight-theme-rapide": "^0.5.2"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.40.0",
+    "astro": ">=6.0.0"
+  }
+}

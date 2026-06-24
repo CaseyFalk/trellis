@@ -1,0 +1,110 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getGraphData } from '../lib/links';
+
+const graph = await getGraphData();
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Concept Map',
+    description: 'A visual map of how the pages in this knowledge base link together.',
+  }}
+>
+  <p>
+    Each node is a page; each edge is an inline link from one page to another.
+    Drag nodes to rearrange, scroll to zoom, and click a node to open its page.
+    The map fills in as pages cross-link.
+  </p>
+
+  <div id="cy" class="kb-graph"></div>
+
+  <script type="application/json" id="kb-graph-data" set:html={JSON.stringify(graph)} />
+
+  <script>
+    import cytoscape from 'cytoscape';
+
+    function cssVar(name: string, fallback: string) {
+      const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      return v || fallback;
+    }
+
+    function init() {
+      const dataEl = document.getElementById('kb-graph-data');
+      const container = document.getElementById('cy');
+      if (!dataEl || !container || container.dataset.rendered) return;
+
+      let graph: { nodes: any[]; edges: any[] };
+      try {
+        graph = JSON.parse(dataEl.textContent || '{"nodes":[],"edges":[]}');
+      } catch (err) {
+        console.error('concept-graph: failed to parse graph data', err);
+        return;
+      }
+      if (!graph.nodes.length) {
+        container.innerHTML =
+          '<p style="padding:1rem;opacity:.7">No pages yet — the map fills in as content is captured and cross-linked.</p>';
+        return;
+      }
+
+      // Cytoscape renders to a canvas and cannot resolve CSS var() — resolve the
+      // theme colors to concrete values here.
+      const accent = cssVar('--sl-color-accent', '#6d4aff');
+      const textColor = cssVar('--sl-color-white', '#ffffff');
+      const edgeColor = cssVar('--sl-color-gray-4', '#888888');
+
+      const elements = [
+        ...graph.nodes.map((n) => ({ data: { id: n.id, label: n.label, group: n.group } })),
+        ...graph.edges.map((e) => ({ data: { source: e.source, target: e.target } })),
+      ];
+
+      try {
+        const cy = cytoscape({
+          container,
+          elements,
+          style: [
+            {
+              selector: 'node',
+              style: {
+                label: 'data(label)',
+                'font-size': '10px',
+                'background-color': accent,
+                color: textColor,
+                'text-valign': 'bottom',
+                'text-margin-y': 4,
+                'text-wrap': 'wrap',
+                'text-max-width': '120px',
+                width: 18,
+                height: 18,
+              },
+            },
+            {
+              selector: 'edge',
+              style: {
+                width: 1,
+                'line-color': edgeColor,
+                'target-arrow-color': edgeColor,
+                'target-arrow-shape': 'triangle',
+                'arrow-scale': 0.7,
+                'curve-style': 'bezier',
+              },
+            },
+          ],
+          layout: { name: 'cose', animate: false },
+        });
+        cy.on('tap', 'node', (evt) => {
+          window.location.href = `/${evt.target.id()}/`;
+        });
+        cy.resize();
+        cy.fit(undefined, 20);
+        container.dataset.rendered = '1';
+      } catch (err) {
+        console.error('concept-graph: cytoscape failed to initialize', err);
+      }
+    }
+
+    if (document.readyState !== 'loading') init();
+    else document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('astro:page-load', init);
+  </script>
+</StarlightPage>

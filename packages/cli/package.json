@@ -1,0 +1,15 @@
+{
+  "name": "trellis",
+  "version": "0.1.0",
+  "description": "Trellis CLI — scaffold and update Trellis learning projects (Homebrew-distributed; thin wrapper over @trellis/core).",
+  "type": "module",
+  "bin": {
+    "trellis": "./src/index.mjs"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@trellis/core": "*"
+  }
+}

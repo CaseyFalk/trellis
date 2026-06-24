@@ -1,0 +1,47 @@
+---
+// Extends Starlight's default footer with three knowledge-base affordances:
+//   - a maturity badge (seedling / growing / established)        (always)
+//   - "Sources" linking to the journal entries that made the page (always)
+//   - "Referenced by" backlinks, derived from the link graph     (features.backlinks)
+import Default from '@astrojs/starlight/components/Footer.astro';
+import { getBacklinks } from '../lib/links';
+import { features } from 'virtual:trellis-config';
+
+const route = Astro.locals.starlightRoute;
+const data = route?.entry?.data ?? ({} as Record<string, any>);
+const id = route?.id ?? '';
+
+const maturity: string | undefined = data.maturity;
+const sources: string[] = data.sources ?? [];
+const backlinks = features.backlinks ? await getBacklinks(id) : [];
+---
+
+{maturity && (
+  <p class={`kb-maturity kb-maturity--${maturity}`}>
+    <span class="kb-maturity__dot" /> {maturity}
+  </p>
+)}
+
+{backlinks.length > 0 && (
+  <aside class="kb-box">
+    <h2 class="kb-box__title">Referenced by</h2>
+    <ul class="kb-box__list">
+      {backlinks.map((b) => (
+        <li><a href={b.href}>{b.title}</a></li>
+      ))}
+    </ul>
+  </aside>
+)}
+
+{sources.length > 0 && (
+  <aside class="kb-box">
+    <h2 class="kb-box__title">Sources</h2>
+    <ul class="kb-box__list">
+      {sources.map((s) => (
+        <li><a href={`/journal/${s}/`}>{s}</a></li>
+      ))}
+    </ul>
+  </aside>
+)}
+
+<Default />

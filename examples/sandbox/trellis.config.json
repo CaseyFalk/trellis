@@ -1,0 +1,8 @@
+{
+  "title": "Trellis Sandbox",
+  "description": "A Phase 1 harness verifying @trellis/core reproduces POC behavior.",
+  "theme": "rapide",
+  "features": { "tooltips": true, "backlinks": true, "conceptGraph": true },
+  "trellisVersion": "0.1.0",
+  "tailored": true
+}

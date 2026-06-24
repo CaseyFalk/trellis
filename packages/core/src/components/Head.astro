@@ -1,0 +1,70 @@
+---
+// Extends Starlight's default <head>, adding two client features site-wide:
+//   1. Mermaid diagram rendering for <pre class="mermaid"> blocks (always on).
+//   2. Glossary hover-tooltips on links into a glossary/ path (features.tooltips).
+import Default from '@astrojs/starlight/components/Head.astro';
+import { getCollection } from 'astro:content';
+import { canonical } from '../lib/links';
+import { features } from 'virtual:trellis-config';
+
+/** A glossary entry is any page with a `glossary` path segment that is not the
+ *  glossary index — works whether glossary is top-level or under `reference/`. */
+function isGlossaryEntry(id: string): boolean {
+  const parts = id.split('/');
+  const i = parts.indexOf('glossary');
+  return i !== -1 && i < parts.length - 1;
+}
+
+const glossary: Record<string, string> = {};
+if (features.tooltips) {
+  const docs = await getCollection('docs');
+  for (const doc of docs) {
+    const id = canonical(doc.id);
+    if (isGlossaryEntry(id)) glossary[`/${id}/`] = doc.data.description ?? '';
+  }
+}
+---
+
+<Default><slot /></Default>
+
+{features.tooltips && (
+  <script type="application/json" id="kb-glossary" set:html={JSON.stringify(glossary)} />
+)}
+
+<script>
+  import mermaid from 'mermaid';
+  import { features } from 'virtual:trellis-config';
+
+  function renderMermaid() {
+    if (!document.querySelector('.mermaid')) return;
+    const dark = document.documentElement.dataset.theme !== 'light';
+    mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default' });
+    mermaid.run({ querySelector: '.mermaid:not([data-processed])' }).catch(() => {});
+  }
+
+  function applyGlossaryTooltips() {
+    if (!features.tooltips) return;
+    const el = document.getElementById('kb-glossary');
+    if (!el) return;
+    let map: Record<string, string> = {};
+    try {
+      map = JSON.parse(el.textContent || '{}');
+    } catch {
+      return;
+    }
+    document.querySelectorAll<HTMLAnchorElement>('a[href*="/glossary/"]').forEach((a) => {
+      const path = new URL(a.href, location.origin).pathname;
+      const def = map[path];
+      if (def && !a.title) a.title = def;
+    });
+  }
+
+  function run() {
+    renderMermaid();
+    applyGlossaryTooltips();
+  }
+
+  if (document.readyState !== 'loading') run();
+  else document.addEventListener('DOMContentLoaded', run);
+  document.addEventListener('astro:page-load', run);
+</script>

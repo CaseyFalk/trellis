@@ -1,0 +1,8 @@
+{
+  "title": "My Learning Project",
+  "description": "A Trellis learning project.",
+  "theme": "rapide",
+  "features": { "tooltips": true, "backlinks": true, "conceptGraph": true },
+  "trellisVersion": "0.1.0",
+  "tailored": false
+}

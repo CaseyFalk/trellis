@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sandbox",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--workspace",
+        "@trellis/sandbox",
+        "--",
+        "--port",
+        "4321"
+      ],
+      "port": 4321
+    }
+  ]
+}
