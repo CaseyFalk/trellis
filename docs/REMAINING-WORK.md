@@ -21,15 +21,25 @@ URL. (`npm run pack:local` still exists for fully-offline local tarballs.)
 **On a version bump:** bump `packages/*/package.json` versions, `npm run pack:release`,
 `gh release create vNEW …`. The template URL tracks the new version automatically.
 
-## ⏳ Remaining — Homebrew tap (optional shorthand)
+## ✅ Done — Homebrew (formula in this repo, no separate tap repo)
 
-`brew install --formula ./Formula/trellis.rb` works from a clone today. For the
-`brew install CaseyFalk/trellis/trellis` one-liner:
+`Formula/trellis.rb` lives in the main repo and installs a **self-contained bundle**
+(`trellis-bundled-X.Y.Z.tgz`, CLI + runtime deps, no Astro-plugin peers — built with
+`npm i --legacy-peer-deps`), so `brew install` needs no network during the sandboxed
+install step.
 
-1. Create a tap repo `CaseyFalk/homebrew-trellis`.
-2. Add `Formula/trellis.rb` to it (already filled with the v0.1.0 url + sha256).
-3. On each release, bump the formula's `url` + `sha256` (`shasum -a 256 dist/trellis-X.Y.Z.tgz`).
-4. `brew install CaseyFalk/trellis/trellis`.
+```sh
+brew tap CaseyFalk/trellis https://github.com/CaseyFalk/trellis   # main repo as the tap
+brew install trellis
+brew upgrade trellis
+```
+
+**On a version bump:** rebuild the bundle (`npm i -g --legacy-peer-deps` from the new
+CLI tarball → `tar`), upload it to the release, and update the formula's `url` +
+`sha256` (`shasum -a 256`). Consider scripting this alongside `pack:release`.
+
+**Not yet done:** verified only on this machine (via a temp prefix). Confirm
+`brew tap` + `brew install trellis` on a clean machine.
 
 ## Future (not blocking)
 

@@ -55,13 +55,15 @@ Works on any machine — `trellis new` pulls `@trellis/core` from the same relea
 ### Homebrew
 
 ```sh
-brew install --formula ./Formula/trellis.rb          # works now (from a clone)
-# brew install CaseyFalk/trellis/trellis             # after the tap is published
+brew tap CaseyFalk/trellis https://github.com/CaseyFalk/trellis   # once per machine
+brew install trellis
+trellis new async-rust "Learn async Rust — futures, tokio."
+brew upgrade trellis                                              # later
 ```
 
-The `brew install CaseyFalk/trellis/trellis` shorthand needs a one-time tap repo —
-see [docs/REMAINING-WORK.md](docs/REMAINING-WORK.md). Formula:
-[`Formula/trellis.rb`](Formula/trellis.rb).
+The formula ([`Formula/trellis.rb`](Formula/trellis.rb)) lives in this repo and
+installs a self-contained bundle, so no network is needed during `brew install`.
+(`brew install --formula ./Formula/trellis.rb` also works from a clone.)
 
 ### From source (development)
 
