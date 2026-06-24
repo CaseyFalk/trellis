@@ -22,6 +22,6 @@ class Trellis < Formula
   end
 
   test do
-    assert_match "trellis — scaffold", shell_output("#{bin}/trellis 2>&1", 0)
+    assert_match "trellis — scaffold", shell_output("#{bin}/trellis 2>&1")
   end
 end
