@@ -11,10 +11,9 @@ The name says it: a *trellis* is the structure a climbing plant grows along.
 Trellis provides the structure (the Diátaxis registers, the capture workflow); your
 knowledge grows up it.
 
-> Status: the framework is functionally complete (scaffold → tailor → learn →
-> capture → update all work). **Distribution is not finished** — see
-> [docs/REMAINING-WORK.md](docs/REMAINING-WORK.md). Use the *from source* path below
-> until then.
+> Status: functionally complete and installable from GitHub Releases. The only
+> remaining nicety is a Homebrew **tap** for the `brew install CaseyFalk/trellis`
+> shorthand — see [docs/REMAINING-WORK.md](docs/REMAINING-WORK.md).
 
 ## What you get
 
@@ -44,30 +43,33 @@ brew upgrade trellis  →  trellis update   (non-destructive framework upgrades)
 
 ## Install
 
-### From source (works today)
+### From the GitHub release (recommended)
 
 ```sh
-git clone https://github.com/CaseyFalk/trellis
-cd trellis
-npm install
-npm link --workspace trellis        # puts `trellis` on your PATH
-
-# until @trellis/core is published, point new projects at your local checkout:
-export TRELLIS_CORE_SPEC="file:$(pwd)/packages/core"   # add to your shell profile
-```
-
-Then from anywhere: `trellis new async-rust "Learn async Rust — futures, tokio."`
-
-### Homebrew (intended — setup pending)
-
-```sh
-brew install CaseyFalk/trellis/trellis
+npm i -g https://github.com/CaseyFalk/trellis/releases/download/v0.1.0/trellis-0.1.0.tgz
 trellis new async-rust "Learn async Rust — futures, tokio."
 ```
 
-This is the target experience. It requires publishing the packages and a Homebrew
-tap — tracked in [docs/REMAINING-WORK.md](docs/REMAINING-WORK.md). A starter formula
-lives at [`Formula/trellis.rb`](Formula/trellis.rb).
+Works on any machine — `trellis new` pulls `@trellis/core` from the same release.
+
+### Homebrew
+
+```sh
+brew install --formula ./Formula/trellis.rb          # works now (from a clone)
+# brew install CaseyFalk/trellis/trellis             # after the tap is published
+```
+
+The `brew install CaseyFalk/trellis/trellis` shorthand needs a one-time tap repo —
+see [docs/REMAINING-WORK.md](docs/REMAINING-WORK.md). Formula:
+[`Formula/trellis.rb`](Formula/trellis.rb).
+
+### From source (development)
+
+```sh
+git clone https://github.com/CaseyFalk/trellis && cd trellis && npm install
+npm link --workspace trellis
+export TRELLIS_CORE_SPEC="file:$(pwd)/packages/core"   # resolve core from the checkout
+```
 
 ## Updating a project
 

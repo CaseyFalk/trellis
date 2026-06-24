@@ -1,21 +1,20 @@
-# Homebrew formula for the Trellis CLI — TEMPLATE / NOT YET INSTALLABLE.
+# Homebrew formula for the Trellis CLI.
 #
-# Blocked on distribution (see docs/REMAINING-WORK.md): the `trellis` CLI and its
-# @trellis/core dependency must be published (npm registry or release tarballs)
-# before this can resolve. Once published, fill in `url` + `sha256` and test with
-#   brew install --build-from-source ./Formula/trellis.rb
+# Installs from the v0.1.0 GitHub release tarball; `npm install` pulls @trellis/core
+# from its release URL (baked into the CLI's package.json). Test locally with:
+#   brew install --formula ./Formula/trellis.rb
+# For `brew install CaseyFalk/trellis/trellis`, publish this file to a tap repo
+# CaseyFalk/homebrew-trellis (see docs/REMAINING-WORK.md).
 class Trellis < Formula
   desc "Scaffold and grow living, captured knowledge bases for learning anything"
   homepage "https://github.com/CaseyFalk/trellis"
-  # TODO: point at the published release tarball (or npm pack output) and set sha256.
-  url "https://github.com/CaseyFalk/trellis/releases/download/vX.Y.Z/trellis-vX.Y.Z.tgz"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  url "https://github.com/CaseyFalk/trellis/releases/download/v0.1.0/trellis-0.1.0.tgz"
+  sha256 "ef67138e76d2e7bac2719b0f326aa42374a809ca8d4b8def7f52e9ce2590b665"
   license "MIT"
 
   depends_on "node"
 
   def install
-    # Install the CLI and its dependencies into libexec, then link the bin.
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
