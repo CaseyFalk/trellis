@@ -233,12 +233,21 @@ work; the from-source path (`npm link` + `TRELLIS_CORE_SPEC`) works today.
 **Done when:** a cold reader can install (from source today), scaffold, tailor, and
 learn unaided.
 
-### Phase 7 — Validation / dogfood
+### Phase 7 — Validation / dogfood — IN PROGRESS (user-driven)
 Run `trellis new` for a fresh focus area; tailor; capture a few exchanges; confirm
 features render at runtime. Stretch: regenerate the "Local LLMs" focus and diff
-against the hand-built POC for parity. Then exercise `trellis update` end-to-end
-with the test migration.
+against the hand-built POC for parity. Then exercise `trellis update` end-to-end.
 **Done when:** a generated project matches POC quality and updates cleanly.
+
+### Shipped beyond the original phases
+- **`trellis run`** — dev server with hot-reload-on-capture (v0.1.1).
+- **Distribution** — tarball releases on the public `CaseyFalk/trellis` repo (ADR
+  0011 realized): `brew tap CaseyFalk/trellis <url> && brew install trellis`, or
+  `npm i -g <release URL>`. Homebrew formula in this repo; `pack:local` /
+  `pack:release` scripts. peerDeps refactor for a lean brew bundle.
+- **Dev/release docs** — current status + how to develop and release live in
+  [CLAUDE.md](CLAUDE.md), [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md), and
+  [docs/RELEASING.md](docs/RELEASING.md). **Start there in a new session.**
 
 ---
 
